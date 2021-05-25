@@ -51,7 +51,7 @@ jobs:
           git config --global user.name "Auto gRPC Generator (Issued by: $GITHUB_ACTOR)"
           git add ./Generated/*
           git status
-          if [[ -z $(git status -uno --porcelain) ]]; then echo "There is no changes to push."; else echo "There is changes to push." && git commit -m "New gRPC Files ID: $GITHUB_RUN_NUMBER" && git push -u "https://HaandvaerkerPortalen-Owner:$REPOTOKEN@github.com/HaandvaerkerPortalen/grpc-generator.git" main; fi
+          if [[ -z $(git status -uno --porcelain) ]]; then echo "There is no changes to push."; else echo "There is changes to push." && git commit -m "New gRPC Files ID: $GITHUB_RUN_NUMBER" && git push -u "https://github.com/HaandvaerkerPortalen/grpc-generator" main; fi
         env:
           API_TOKEN_GITHUB: ${{ secrets.REPOTOKEN }}  
           
@@ -67,7 +67,7 @@ jobs:
           cd ./EkompletGRPCExample
           git add ./EkompletGRPCExample/Generated/gRPC/*
           git status
-          if [[ -z $(git status -uno --porcelain) ]]; then echo "There is no changes to push."; else echo "There is changes to push." && git commit -m "New gRPC Files ID: $GITHUB_RUN_NUMBER" && git push -u "https://HaandvaerkerPortalen-Owner:$REPOTOKEN@github.com/HaandvaerkerPortalen/web-api.git" developer; fi
+          if [[ -z $(git status -uno --porcelain) ]]; then echo "There is no changes to push."; else echo "There is changes to push." && git commit -m "New gRPC Files ID: $GITHUB_RUN_NUMBER" && git push -u "https://github.com/HaandvaerkerPortalen/grpc-generator" main; fi
         env:
          REPOTOKEN: ${{ secrets.REPOTOKEN }}
          
