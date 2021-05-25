@@ -4,7 +4,7 @@ import"Protos/RequestUtility.proto";
 
 service SalesmanHandler{
 	rpc RequestSalesmanById (salesmanRequestById) returns (RequestReplyWithSalesman);
-	rpc RequestSalesmen(Empty) returns (RequestReplySalesmen)
+	rpc RequestSalesmen(Empty) returns (RequestReplySalesmen);
 }
 
 
