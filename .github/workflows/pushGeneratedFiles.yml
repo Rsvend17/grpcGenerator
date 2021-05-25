@@ -61,13 +61,13 @@ jobs:
           git clone -b main "https://github.com/Rsvend17/EkompletGRPCExample.git"
           git rm EkompletGRPCExample/Generated/gRPC/*
           cd ..
-          mkdir ./EkompletGRPCExample/web-api/Generated
-          mkdir ./EkompletGRPCExample/web-api/Generated/gRPC
-          cp ./Generated/CSharp/EkompletGRPCExample/* ./web-api/web-api/Generated/gRPC
+          mkdir ./EkompletGRPCExample/Generated
+          mkdir ./EkompletGRPCExample/Generated/gRPC
+          cp ./Generated/CSharp/EkompletGRPCExample/* ./Generated/gRPC
           cd ./EkompletGRPCExample
           git add ./EkompletGRPCExample/Generated/gRPC/*
           git status
-          if [[ -z $(git status -uno --porcelain) ]]; then echo "There is no changes to push."; else echo "There is changes to push." && git commit -m "New gRPC Files ID: $GITHUB_RUN_NUMBER" && git push -u "https://github.com/Rsvend17/EkompletGRPCExample.git" main; fi
+          if [[ -z $(git status -uno --porcelain) ]]; then echo "There is no changes to push."; else echo "There is changes to push." && git commit -a -m "New gRPC Files ID: $GITHUB_RUN_NUMBER" && git push -u "https://github.com/Rsvend17/EkompletGRPCExample.git" main; fi
         env:
          REPOTOKEN: ${{ secrets.REPOTOKEN }}
          
