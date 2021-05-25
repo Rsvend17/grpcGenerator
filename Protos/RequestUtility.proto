@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+service RequestUtilityHandler{
+}
+
+/*
+    Used in a response to indicate whether the request succeeded or not.
+    Should hold one or more error messages if request did not succeed.
+ */
+message RequestResult {
+    bool Succeeded = 1;
+    repeated string Errors = 2;
+}
+
+/*
+    Used for requests with only a string.
+ */
+message StringMsg{
+    string Content = 1;
+}
+
+/*
+    Used for request with empty message.
+ */
+message Empty{
+}

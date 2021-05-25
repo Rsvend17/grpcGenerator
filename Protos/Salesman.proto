@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+import"Protos/RequestUtility.proto";
+
+service SalesmanHandler{
+	rpc RequestSalesmanById (salesmanRequestById) returns (RequestReplyWithSalesman);
+	rpc RequestSalesmen(Empty) returns (RequestReplySalesmen)
+}
+
+
+
+/*
+	Request from front-end when 
+*/
+message salesmanRequestById{
+	string Id =1;
+}
+
+/*
+	Salesman Msg to be delivered. 
+*/
+message SalesmanMsg{
+	uint32 Id = 1;
+	uint32 PhoneNumer = 2;
+	string Email = 3; 
+	string FirstName = 4;
+	string LastName = 5;
+}
+
+/*
+	Response to front-end when sending salesmen.
+*/
+message RequestReplyWithSalesman{
+	RequestResult Result =1; 
+	SalesmanMsg Salesman = 2;
+}
+
+/*
+	Response to the front-end requesting all the salesmen in the server. 
+*/
+message RequestReplySalesmen{
+	RequestResult Result = 1; 
+	repeated SalesmanMsg Salesmen =2; 
+}
