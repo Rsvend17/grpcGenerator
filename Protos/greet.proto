@@ -6,6 +6,7 @@ package greet;
 service Greeter {
   // Sends a greeting
   rpc SayHello (HelloRequest) returns (HelloReply);
+  rpc sayDummy (HelloRequest) returns(HelloDummy);
 }
 
 // The request message containing the user's name.
@@ -16,4 +17,8 @@ message HelloRequest {
 // The response message containing the greetings.
 message HelloReply {
   string message = 1;
+}
+
+message HelloDummy{
+string message = 1;
 }
