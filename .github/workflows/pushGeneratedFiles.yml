@@ -34,28 +34,16 @@ jobs:
           mv ./Generated/Dart/Protos/*.* ./Generated/Dart
         
         
-      - name: Generate CSharp files for web-api
+      - name: Generate CSharp files for EkompletExample
         run: |
           cp -R Protos CSharpProtoGeneratorServer/ProtoGenerator 
           cd ./CSharpProtoGeneratorServer/ProtoGenerator/Protos 
-          for FILE in *.proto; do echo "option csharp_namespace = \"web_api.Generated.gRPC.${FILE%.proto}\";" >> $FILE; done
+          for FILE in *.proto; do echo "option csharp_namespace = \"EKomplet.Generated.gRPC.${FILE%.proto}\";" >> $FILE; done
           cd ..
           dotnet restore 
           dotnet build 
           cd .. && cd ..
-          mv ./CSharpProtoGeneratorServer/ProtoGenerator/Generated/Protos/*.* ./Generated/CSharp/web-api
-      
-      
-      - name: Generate CSharp files for Ekomplet
-        run: |
-          cp -R Protos CSharpProtoGeneratorClient/ProtoGenerator 
-          cd ./CSharpProtoGeneratorClient/ProtoGenerator/Protos 
-          for FILE in *.proto; do echo "option csharp_namespace = \"frontend_admin.Generated.gRPC.${FILE%.proto}\";" >> $FILE; done
-          cd ..
-          dotnet restore
-          dotnet build 
-          cd .. && cd ..
-          mv ./CSharpProtoGeneratorClient/ProtoGenerator/Generated/Protos/*.* ./Generated/CSharp/EKomplet
+          mv ./CSharpProtoGeneratorServer/ProtoGenerator/Generated/Protos/*.* ./Generated/CSharp/EKomplet
           
           
       - name: Push generated gRPC files to this repo
