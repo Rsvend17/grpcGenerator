@@ -28,3 +28,13 @@ const HelloReply$json = const {
 
 /// Descriptor for `HelloReply`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List helloReplyDescriptor = $convert.base64Decode('CgpIZWxsb1JlcGx5EhgKB21lc3NhZ2UYASABKAlSB21lc3NhZ2U=');
+@$core.Deprecated('Use helloDummyDescriptor instead')
+const HelloDummy$json = const {
+  '1': 'HelloDummy',
+  '2': const [
+    const {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
+  ],
+};
+
+/// Descriptor for `HelloDummy`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List helloDummyDescriptor = $convert.base64Decode('CgpIZWxsb0R1bW15EhgKB21lc3NhZ2UYASABKAlSB21lc3NhZ2U=');

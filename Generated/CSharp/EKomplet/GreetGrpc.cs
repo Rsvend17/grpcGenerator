@@ -47,6 +47,7 @@ namespace EKomplet.Generated.gRPC.greet {
 
     static readonly grpc::Marshaller<global::EKomplet.Generated.gRPC.greet.HelloRequest> __Marshaller_greet_HelloRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EKomplet.Generated.gRPC.greet.HelloRequest.Parser));
     static readonly grpc::Marshaller<global::EKomplet.Generated.gRPC.greet.HelloReply> __Marshaller_greet_HelloReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EKomplet.Generated.gRPC.greet.HelloReply.Parser));
+    static readonly grpc::Marshaller<global::EKomplet.Generated.gRPC.greet.HelloDummy> __Marshaller_greet_HelloDummy = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EKomplet.Generated.gRPC.greet.HelloDummy.Parser));
 
     static readonly grpc::Method<global::EKomplet.Generated.gRPC.greet.HelloRequest, global::EKomplet.Generated.gRPC.greet.HelloReply> __Method_SayHello = new grpc::Method<global::EKomplet.Generated.gRPC.greet.HelloRequest, global::EKomplet.Generated.gRPC.greet.HelloReply>(
         grpc::MethodType.Unary,
@@ -54,6 +55,13 @@ namespace EKomplet.Generated.gRPC.greet {
         "SayHello",
         __Marshaller_greet_HelloRequest,
         __Marshaller_greet_HelloReply);
+
+    static readonly grpc::Method<global::EKomplet.Generated.gRPC.greet.HelloRequest, global::EKomplet.Generated.gRPC.greet.HelloDummy> __Method_sayDummy = new grpc::Method<global::EKomplet.Generated.gRPC.greet.HelloRequest, global::EKomplet.Generated.gRPC.greet.HelloDummy>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "sayDummy",
+        __Marshaller_greet_HelloRequest,
+        __Marshaller_greet_HelloDummy);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -76,6 +84,11 @@ namespace EKomplet.Generated.gRPC.greet {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      public virtual global::System.Threading.Tasks.Task<global::EKomplet.Generated.gRPC.greet.HelloDummy> sayDummy(global::EKomplet.Generated.gRPC.greet.HelloRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
     }
 
     /// <summary>Creates service definition that can be registered with a server</summary>
@@ -83,7 +96,8 @@ namespace EKomplet.Generated.gRPC.greet {
     public static grpc::ServerServiceDefinition BindService(GreeterBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_SayHello, serviceImpl.SayHello).Build();
+          .AddMethod(__Method_SayHello, serviceImpl.SayHello)
+          .AddMethod(__Method_sayDummy, serviceImpl.sayDummy).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -93,6 +107,7 @@ namespace EKomplet.Generated.gRPC.greet {
     public static void BindService(grpc::ServiceBinderBase serviceBinder, GreeterBase serviceImpl)
     {
       serviceBinder.AddMethod(__Method_SayHello, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EKomplet.Generated.gRPC.greet.HelloRequest, global::EKomplet.Generated.gRPC.greet.HelloReply>(serviceImpl.SayHello));
+      serviceBinder.AddMethod(__Method_sayDummy, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EKomplet.Generated.gRPC.greet.HelloRequest, global::EKomplet.Generated.gRPC.greet.HelloDummy>(serviceImpl.sayDummy));
     }
 
   }

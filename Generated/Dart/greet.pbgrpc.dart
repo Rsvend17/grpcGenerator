@@ -18,6 +18,10 @@ class GreeterClient extends $grpc.Client {
       '/greet.Greeter/SayHello',
       ($0.HelloRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.HelloReply.fromBuffer(value));
+  static final _$sayDummy = $grpc.ClientMethod<$0.HelloRequest, $0.HelloDummy>(
+      '/greet.Greeter/sayDummy',
+      ($0.HelloRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.HelloDummy.fromBuffer(value));
 
   GreeterClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -27,6 +31,11 @@ class GreeterClient extends $grpc.Client {
   $grpc.ResponseFuture<$0.HelloReply> sayHello($0.HelloRequest request,
       {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$sayHello, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.HelloDummy> sayDummy($0.HelloRequest request,
+      {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$sayDummy, request, options: options);
   }
 }
 
@@ -41,6 +50,13 @@ abstract class GreeterServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.HelloRequest.fromBuffer(value),
         ($0.HelloReply value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.HelloRequest, $0.HelloDummy>(
+        'sayDummy',
+        sayDummy_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.HelloRequest.fromBuffer(value),
+        ($0.HelloDummy value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.HelloReply> sayHello_Pre(
@@ -48,6 +64,13 @@ abstract class GreeterServiceBase extends $grpc.Service {
     return sayHello(call, await request);
   }
 
+  $async.Future<$0.HelloDummy> sayDummy_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.HelloRequest> request) async {
+    return sayDummy(call, await request);
+  }
+
   $async.Future<$0.HelloReply> sayHello(
+      $grpc.ServiceCall call, $0.HelloRequest request);
+  $async.Future<$0.HelloDummy> sayDummy(
       $grpc.ServiceCall call, $0.HelloRequest request);
 }
