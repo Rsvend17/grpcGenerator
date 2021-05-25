@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-import"Protos/RequestUtility.proto";
+import "Protos/RequestUtility.proto";
 
 service SalesmanHandler{
 	rpc RequestSalesmanById (salesmanRequestById) returns (RequestReplyWithSalesman);
