@@ -1,0 +1,86 @@
+name: Generate gRPC Files
+on:
+  push:
+    branches: 
+    - main
+    
+jobs:
+   generate-files:
+     runs-on: ubuntu-latest
+     steps: 
+      - uses: dart-lang/setup-dart@v1
+      - uses: arduino/setup-protoc@v1
+      - name: Install Dart plugin
+        run: dart pub global activate protoc_plugin
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+      - uses: actions/checkout@v2
+      
+      
+      - name: Delete old generated files if any
+        run: |
+          rm -rf ./Generated/Dart
+          rm -rf ./Generated/CSharp
+          mkdir ./Generated/Dart
+          mkdir ./Generated/CSharp
+          mkdir ./Generated/CSharp/EKomplet
+          
+          
+      - name: Generate Dart Files
+        run: |
+          protoc Protos/*.proto --dart_out=grpc:Generated/Dart/
+          mv ./Generated/Dart/Protos/*.* ./Generated/Dart
+        
+        
+      - name: Generate CSharp files for web-api
+        run: |
+          cp -R Protos CSharpProtoGeneratorServer/ProtoGenerator 
+          cd ./CSharpProtoGeneratorServer/ProtoGenerator/Protos 
+          for FILE in *.proto; do echo "option csharp_namespace = \"web_api.Generated.gRPC.${FILE%.proto}\";" >> $FILE; done
+          cd ..
+          dotnet restore 
+          dotnet build 
+          cd .. && cd ..
+          mv ./CSharpProtoGeneratorServer/ProtoGenerator/Generated/Protos/*.* ./Generated/CSharp/web-api
+      
+      
+      - name: Generate CSharp files for Ekomplet
+        run: |
+          cp -R Protos CSharpProtoGeneratorClient/ProtoGenerator 
+          cd ./CSharpProtoGeneratorClient/ProtoGenerator/Protos 
+          for FILE in *.proto; do echo "option csharp_namespace = \"frontend_admin.Generated.gRPC.${FILE%.proto}\";" >> $FILE; done
+          cd ..
+          dotnet restore
+          dotnet build 
+          cd .. && cd ..
+          mv ./CSharpProtoGeneratorClient/ProtoGenerator/Generated/Protos/*.* ./Generated/CSharp/EKomplet
+          
+          
+      - name: Push generated gRPC files to this repo
+        run: |
+          git config --global user.name "Auto gRPC Generator (Issued by: $GITHUB_ACTOR)"
+          git add ./Generated/*
+          git status
+          if [[ -z $(git status -uno --porcelain) ]]; then echo "There is no changes to push."; else echo "There is changes to push." && git commit -m "New gRPC Files ID: $GITHUB_RUN_NUMBER" && git push -u "https://HaandvaerkerPortalen-Owner:$REPOTOKEN@github.com/HaandvaerkerPortalen/grpc-generator.git" main; fi
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.REPOTOKEN }}  
+          
+      - name: Push generated gRPC files to EkompletExample
+        run: |
+          git config --global user.name "Auto gRPC Generator (Issued by: $GITHUB_ACTOR)"
+          git clone -b main "https://github.com/Rsvend17/EkompletGRPCExample"
+          git rm EkompletGRPCExample/Generated/gRPC/*
+          cd ..
+          mkdir ./EkompletGRPCExample/web-api/Generated
+          mkdir ./EkompletGRPCExample/web-api/Generated/gRPC
+          cp ./Generated/CSharp/EkompletGRPCExample/* ./web-api/web-api/Generated/gRPC
+          cd ./EkompletGRPCExample
+          git add ./EkompletGRPCExample/Generated/gRPC/*
+          git status
+          if [[ -z $(git status -uno --porcelain) ]]; then echo "There is no changes to push."; else echo "There is changes to push." && git commit -m "New gRPC Files ID: $GITHUB_RUN_NUMBER" && git push -u "https://HaandvaerkerPortalen-Owner:$REPOTOKEN@github.com/HaandvaerkerPortalen/web-api.git" developer; fi
+        env:
+         REPOTOKEN: ${{ secrets.REPOTOKEN }}
+         
+         
