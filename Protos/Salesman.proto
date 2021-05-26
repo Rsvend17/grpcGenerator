@@ -13,15 +13,15 @@ service SalesmanHandler{
 	Request from front-end when 
 */
 message salesmanRequestById{
-	string Id =1;
+	string Id = 1;
 }
 
 /*
 	Salesman Msg to be delivered. 
 */
 message SalesmanMsg{
-	uint32 Id = 1;
-	uint32 PhoneNumer = 2;
+	int Id = 1;
+	int PhoneNumer = 2;
 	string Email = 3; 
 	string FirstName = 4;
 	string LastName = 5;
